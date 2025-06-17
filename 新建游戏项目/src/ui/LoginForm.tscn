@@ -1,4 +1,7 @@
-[gd_scene format=3 uid="uid://qx6q5fw1staj"]
+[gd_scene load_steps=3 format=3 uid="uid://qx6q5fw1staj"]
+
+[ext_resource type="Theme" uid="uid://b05yobvoo5i0n" path="res://assets/theme/control.tres" id="1_mqle7"]
+[ext_resource type="Texture2D" uid="uid://yajdyc8n8e8u" path="res://assets/blackground/gradient.svg" id="2_mqle7"]
 
 [node name="LoginForm" type="Control"]
 custom_minimum_size = Vector2(584, 272)
@@ -14,19 +17,43 @@ offset_right = 292.0
 offset_bottom = 136.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_mqle7")
 
-[node name="BoxContainer" type="BoxContainer" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="menu" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -241.5
+offset_top = -133.5
+offset_right = 241.5
+offset_bottom = 133.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_mqle7")
+region_rect = Rect2(-9.68018, 5.07712, 1937.14, 1078.02)
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
 
-[node name="Label" type="Label" parent="BoxContainer"]
-custom_minimum_size = Vector2(120, 31)
+[node name="BoxContainer" type="BoxContainer" parent="menu"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -57.5
+offset_top = 64.0
+offset_right = 57.5
+offset_bottom = 104.0
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="menu/BoxContainer"]
+custom_minimum_size = Vector2(120, 30)
 layout_mode = 2
-text = "email                   "
+text = "Email"
 
-[node name="LineEdit" type="LineEdit" parent="BoxContainer"]
-clip_contents = true
-custom_minimum_size = Vector2(200, 0)
+[node name="LineEdit" type="LineEdit" parent="menu/BoxContainer"]
+custom_minimum_size = Vector2(180, 30)
 layout_mode = 2
-text = "123123"
+text = "邮箱地址"

@@ -7,13 +7,13 @@ func _ready() -> void:
 	var email = ServerConnection.get_last_email()
 	print(email)
 	# 创建UI系统
-	var ui = UICanvas.new()
-	add_child(ui)
-	# 添加主菜单
-	var main_menu = preload("res://src/ui/LoginForm.tscn").instantiate()
-	ui.add_ui(main_menu)
-	ui.set_ui_visibility(false)
-	ui.set_ui_visibility(true)
+	#var ui = UICanvas.new()
+	#add_child(ui)
+	## 添加主菜单
+	#var main_menu = preload("res://src/ui/LoginForm.tscn").instantiate()
+	#ui.add_ui(main_menu)
+	#ui.set_ui_visibility(false)
+	#ui.set_ui_visibility(true)
 	pass # Replace with function body.
 
 
