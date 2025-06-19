@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://qx6q5fw1staj"]
 
-[ext_resource type="Theme" uid="uid://cpfuam6p81m52" path="res://assets/theme/login_form_theme.tres" id="1_mqle7"]
+[ext_resource type="Theme" uid="uid://cpfuam6p81m52" path="res://assets/theme/login_form/login_form_theme.tres" id="1_mqle7"]
 [ext_resource type="Texture2D" uid="uid://yajdyc8n8e8u" path="res://assets/blackground/gradient.svg" id="2_mqle7"]
 
 [node name="LoginForm" type="Control"]
@@ -123,9 +123,9 @@ text = "注册"
 
 [node name="LineEdit" type="LineEdit" parent="menu"]
 layout_mode = 0
-offset_left = 86.0
-offset_top = 211.0
-offset_right = 408.0
-offset_bottom = 242.0
+offset_left = 84.5
+offset_top = 247.5
+offset_right = 406.5
+offset_bottom = 278.5
 text = "1231231231231232131"
 alignment = 1

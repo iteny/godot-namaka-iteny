@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://c5v3e0yoisbxb"]
+[gd_scene load_steps=2 format=3 uid="uid://c5v3e0yoisbxb"]
+
+[ext_resource type="Theme" uid="uid://cpfuam6p81m52" path="res://assets/theme/login_form/login_form_theme.tres" id="1_y6tel"]
 
 [node name="LoginUI" type="Control"]
 layout_mode = 3
@@ -7,6 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_y6tel")
 
 [node name="BGParticles" type="GPUParticles2D" parent="."]
 

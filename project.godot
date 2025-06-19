@@ -20,6 +20,10 @@ config/icon="res://icon.svg"
 Nakama="*res://addons/com.heroiclabs.nakama/Nakama.gd"
 ServerConnection="*res://src/auto_load/ServerConnection.gd"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/handy_nodes/plugin.cfg", "res://addons/icon_quick_access/plugin.cfg")
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

@@ -1,0 +1,10 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://dvgn35o6jidgh"]
+
+[ext_resource type="Texture2D" uid="uid://cijnbspbn0k6c" path="res://assets/theme/clashy/graphics/button-disabled.svg" id="1_hwvtn"]
+
+[resource]
+texture = ExtResource("1_hwvtn")
+texture_margin_left = 16.0
+texture_margin_top = 10.0
+texture_margin_right = 16.0
+texture_margin_bottom = 10.0
