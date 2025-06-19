@@ -1,12 +1,6 @@
 [gd_resource type="Theme" load_steps=3 format=3 uid="uid://b05yobvoo5i0n"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jf0gh"]
-content_margin_left = 4.0
-content_margin_top = 6.0
-bg_color = Color(0.869014, 0.443179, 0.577893, 1)
-border_width_bottom = 14
-border_color = Color(0.942786, 0.717956, 0.893789, 1)
-border_blend = true
+[ext_resource type="StyleBox" uid="uid://c85t7p480eqv7" path="res://assets/theme/label_box_flat.tres" id="1_jf0gh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k571m"]
 content_margin_left = 4.0
@@ -17,5 +11,5 @@ border_color = Color(0.891488, 0.762429, 0.786886, 1)
 border_blend = true
 
 [resource]
-Label/styles/normal = SubResource("StyleBoxFlat_jf0gh")
+Label/styles/normal = ExtResource("1_jf0gh")
 LineEdit/styles/normal = SubResource("StyleBoxFlat_k571m")

@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="新建游戏项目"
+config/name="godot-namaka-iteny"
 run/main_scene="uid://bv16tmh2litl2"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"

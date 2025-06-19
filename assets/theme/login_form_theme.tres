@@ -1,0 +1,8 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://cpfuam6p81m52"]
+
+[ext_resource type="StyleBox" uid="uid://c85t7p480eqv7" path="res://assets/theme/label_box_flat.tres" id="1_yid6t"]
+[ext_resource type="StyleBox" uid="uid://pcf3fb0h8i4a" path="res://assets/theme/line_edit_box_flat.tres" id="2_qp8le"]
+
+[resource]
+Label/styles/normal = ExtResource("1_yid6t")
+LineEdit/styles/normal = ExtResource("2_qp8le")
