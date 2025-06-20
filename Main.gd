@@ -3,6 +3,8 @@ extends Node2D
 @onready var login_form = $CanvasLayer/LoginForm # 
 @onready var scene_container = $CanvasLayer/LoginForm  # 子场景容器节点
 
+#@onready var login_form: LoginForm = $CanvasLayer/LoginForm
+
 var current_scene: Node = null  # 当前显示的子场景
 var ui:UICanvas
 # Called when the node enters the scene tree for the first time.
@@ -19,6 +21,7 @@ func _ready() -> void:
 	#ui.add_ui(main_menu)
 	#ui.set_ui_visibility(false)
 	#ui.set_ui_visibility(true)
+	#login_form.hide()
 	login_form.goto_register.connect(_on_loginform_sings)
 	#print(login_form.goto_register.connect())
 	pass # Replace with function body.
@@ -26,40 +29,31 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	
+	#打印场景内存占用
+	if Engine.get_frames_drawn()==100:
+		print("内存占用:",OS.get_static_memory_peak_usage()/1024/1024,"mb")
 	pass
 func _on_loginform_sings():
-	#ui = UICanvas.new()
-	#ui.switch_ui(preload("res://src/ui/RegisterForm.tscn"), UICanvas.UI_LAYER.DEFAULT)
-	#var root = get_tree().get_node("canvas") # 假设根节点名为Root
-#
-	#root.load_scene("res://src/ui/RegisterForm.tscn")
-	
-	load_sub_scene("res://src/ui/RegisterForm.tscn")
-	#remove_child_scene()
-	#get_tree().change_scene_to_file("res://src/ui/RegisterForm.tscn")
-	print("Signal 'sings' received from LoginForm!")
-	
-# 加载子场景
-func load_sub_scene(scene_path: String):
-	# 卸载当前场景
-	if current_scene:
-		current_scene.queue_free()
-	
-	# 加载新场景
-	var new_scene = load(scene_path).instantiate()
-	scene_container.add_child(new_scene)
-	current_scene = new_scene
-	
-	# 连接返回按钮信号（如果存在）
-	if new_scene.has_method("back_to_main"):
-		new_scene.connect("back_to_main", Callable(self, "_on_back_to_main"))
-func remove_child_scene():
-	# 1. 获取要移除的场景引用
-	var scene_to_remove = $CanvasLayer/LoginForm
-	
-	# 2. 从父节点移除
-	remove_child(scene_to_remove)
-	
-	# 3. 安全释放资源
-	scene_to_remove.queue_free()
+	change_scene_with_fade("res://src/ui/RegisterForm.tscn")
+func change_scene_with_fade(path:String)->void:
+	#layer=10	
+	print("111")
+	login_form.show()
+	var tween:=create_tween()
+	tween.tween_property(login_form,"modulate:a",1.0,0.2)
+	await tween.finished
+	print("222")
+	await change_scene_async(path)
+	var tween_out:=create_tween()
+	tween_out.tween_property(login_form,"modulate:a",0.0,0.3)
+	await tween.finished
+	login_form.hide()
+	print("222")
+#异步加载
+func change_scene_async(path:String)->void:
+	ResourceLoader.load_threaded_request(path)
+	while ResourceLoader.load_threaded_get_status(path)==ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+		await get_tree().create_timer(0.05).timeout
+	if ResourceLoader.load_threaded_get_status(path)==ResourceLoader.THREAD_LOAD_LOADED:
+		get_tree().change_scene_to_packed(ResourceLoader.load_threaded_get(path))
+		
