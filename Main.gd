@@ -2,9 +2,8 @@ extends Node2D
 
 @onready var login_form = $CanvasLayer/LoginForm # 
 @onready var scene_container = $CanvasLayer/LoginForm  # 子场景容器节点
-
+var registerform= RegisterForm
 #@onready var login_form: LoginForm = $CanvasLayer/LoginForm
-
 var current_scene: Node = null  # 当前显示的子场景
 var ui:UICanvas
 # Called when the node enters the scene tree for the first time.
@@ -23,6 +22,8 @@ func _ready() -> void:
 	#ui.set_ui_visibility(true)
 	#login_form.hide()
 	login_form.goto_register.connect(_on_loginform_to_registerform)
+	#registerform.register_pressed.connect()
+	#play_node.register_pressed.connect()
 	# 创建新节点（可以是实例化场景或新建节点）
 	
 	# 替换场景中名为 "Player" 的节点
@@ -44,8 +45,16 @@ func _on_change_scene():
 #登录框替换成注册框
 func _on_loginform_to_registerform():
 	var new_node = preload("res://src/ui/RegisterForm.tscn").instantiate()
-	var target_node = get_node("/root/Main/CanvasLayer/LoginForm")
+	var target_node = get_node("/root/Main/CanvasLayer/LoginForm")	
+	new_node.register_pressed.connect(_on_laoluan)
 	replace_child_node(target_node, new_node)
+func _on_laoluan():
+	var new_node = preload("res://src/ui/LoginForm.tscn").instantiate()
+	var target_node = get_node("/root/Main/CanvasLayer/RegisterForm")	
+	new_node.goto_register.connect(_on_loginform_to_registerform)
+	replace_child_node(target_node, new_node)
+	print("老卵")	
+	
 func change_scene_with_fade(path:String)->void:
 	#layer=10	
 	print("111")

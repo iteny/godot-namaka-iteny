@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=11 format=4 uid="uid://cpfuam6p81m52"]
+[gd_resource type="Theme" load_steps=12 format=4 uid="uid://cpfuam6p81m52"]
 
 [ext_resource type="StyleBox" uid="uid://dvgn35o6jidgh" path="res://assets/theme/login_form/button_disabled_box_texture.tres" id="1_lf2xx"]
 [ext_resource type="StyleBox" uid="uid://c7ye07nuujjq2" path="res://assets/theme/login_form/button_box_texture.tres" id="1_rml0a"]
@@ -7,6 +7,7 @@
 [ext_resource type="StyleBox" uid="uid://dbkgvf652rw1e" path="res://assets/theme/login_form/button_focus_box_texture.tres" id="2_mvu1x"]
 [ext_resource type="StyleBox" uid="uid://pcf3fb0h8i4a" path="res://assets/theme/login_form/line_edit_box_flat.tres" id="2_qp8le"]
 [ext_resource type="StyleBox" uid="uid://bqv0ea1wfp1u8" path="res://assets/theme/login_form/button_pressed_box_texture.tres" id="3_af0ge"]
+[ext_resource type="StyleBox" uid="uid://bk7yqynp6r6uh" path="res://assets/theme/login_form/rich_label_box_flat.tres" id="8_7x7tb"]
 
 [sub_resource type="Image" id="Image_m4nj5"]
 data = {
@@ -870,3 +871,4 @@ Button/styles/pressed = ExtResource("3_af0ge")
 CheckBox/styles/normal = SubResource("StyleBoxTexture_mvu1x")
 Label/styles/normal = ExtResource("1_yid6t")
 LineEdit/styles/normal = ExtResource("2_qp8le")
+RichTextLabel/styles/normal = ExtResource("8_7x7tb")
