@@ -22,7 +22,7 @@ func _ready() -> void:
 	#ui.set_ui_visibility(false)
 	#ui.set_ui_visibility(true)
 	#login_form.hide()
-	login_form.goto_register.connect(_on_loginform_sings)
+	login_form.goto_register.connect(_on_loginform_to_registerform)
 	# 创建新节点（可以是实例化场景或新建节点）
 	
 	# 替换场景中名为 "Player" 的节点
@@ -38,11 +38,14 @@ func _process(delta: float) -> void:
 	if Engine.get_frames_drawn()==100:
 		print("内存占用:",OS.get_static_memory_peak_usage()/1024/1024,"mb")
 	pass
-func _on_loginform_sings():
-	#change_scene_with_fade("res://src/ui/RegisterForm.tscn")
-	var new_player = preload("res://src/ui/RegisterForm.tscn").instantiate()
+#切换场景
+func _on_change_scene():
+	change_scene_with_fade("res://src/ui/RegisterForm.tscn")
+#登录框替换成注册框
+func _on_loginform_to_registerform():
+	var new_node = preload("res://src/ui/RegisterForm.tscn").instantiate()
 	var target_node = get_node("/root/Main/CanvasLayer/LoginForm")
-	quick_replace(target_node, new_player)
+	replace_child_node(target_node, new_node)
 func change_scene_with_fade(path:String)->void:
 	#layer=10	
 	print("111")
@@ -93,18 +96,14 @@ func replace_node(target_path: NodePath, new_node: Node):
 	# 恢复关键属性
 	new_node.global_transform = transform  # 如果是2D用 global_transform
 	# 可根据需要复制其他属性（如脚本变量等）
-# 更简洁的方式（需确保无副作用）
-# 使用节点对象作为参数的版本
-func quick_replace(target_node: Node, new_node: Node):
+# 替换场景中的某一个节点
+func replace_child_node(target_node: Node, new_node: Node):
 	# 获取父节点
 	var parent = target_node.get_parent()
-	
 	# 记录位置索引
 	var index = target_node.get_index()
-	
 	# 添加新节点并移动到相同位置
 	parent.add_child(new_node)
 	parent.move_child(new_node, index)
-	
 	# 移除旧节点
 	target_node.queue_free()
