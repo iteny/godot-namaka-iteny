@@ -2,15 +2,23 @@ extends Node2D
 
 @onready var login_form = $CanvasLayer/LoginForm # 
 @onready var scene_container = $CanvasLayer/LoginForm  # 子场景容器节点
-var registerform= RegisterForm
 #@onready var login_form: LoginForm = $CanvasLayer/LoginForm
 var current_scene: Node = null  # 当前显示的子场景
 var ui:UICanvas
+# Nakama 客户端配置
+var client : NakamaClient
+var session : NakamaSession
+const SERVER_KEY = "defaultkey"  # 默认服务器密钥
+const SERVER_ADDRESS = "127.0.0.1" # 服务器地址
+const SERVER_PORT = 7350 # 默认端口
+const SERVER_SCHEME = "http"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	ServerConnection.save_email("iteny@gmail.com")
 	var email = ServerConnection.get_last_email()
 	print(email)
+	# 初始化客户端
+	client = Nakama.create_client(SERVER_KEY, SERVER_ADDRESS, SERVER_PORT, SERVER_SCHEME)
 	# 创建UI系统
 	#var ui = UICanvas.new()
 	#ui = UICanvas.new()
@@ -48,13 +56,32 @@ func _on_loginform_to_registerform():
 	var target_node = get_node("/root/Main/CanvasLayer/LoginForm")	
 	new_node.register_pressed.connect(_on_laoluan)
 	replace_child_node(target_node, new_node)
-func _on_laoluan():
+func _on_laoluan(email:String,password:String):
+	print("账号密码分别是:"+email+password)
 	var new_node = preload("res://src/ui/LoginForm.tscn").instantiate()
 	var target_node = get_node("/root/Main/CanvasLayer/RegisterForm")	
 	new_node.goto_register.connect(_on_loginform_to_registerform)
 	replace_child_node(target_node, new_node)
-	print("老卵")	
+	 # 使用正确的认证方法进行注册
+	var result = await client.authenticate_email_async(email, password, null, true)
 	
+	if result.is_exception():
+		var error = result.get_exception()
+		#$result_label.text = "注册失败: %s" % error.message
+	else:
+		session = result
+		#$result_label.text = "注册成功！ID: %s" % session.user_id
+	print("老卵")	
+# 使用新认证系统的注册函数
+#func _register_with_email(email: String, password: String):
+	## 创建认证对象
+	#var auth = NakamaAuth.new()
+	#auth.email = email
+	#auth.password = password
+	#auth.create = true  # 设置为 true 表示注册新用户
+	#
+	## 使用 authenticate_async 方法
+	#return await client.authenticate_async(auth)	
 func change_scene_with_fade(path:String)->void:
 	#layer=10	
 	print("111")
