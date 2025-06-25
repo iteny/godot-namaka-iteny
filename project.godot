@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Nakama="*res://addons/com.heroiclabs.nakama/Nakama.gd"
 ServerConnection="*res://src/auto_load/ServerConnection.gd"
+ValidData="*res://src/auto_load/ValidData.gd"
 
 [editor_plugins]
 

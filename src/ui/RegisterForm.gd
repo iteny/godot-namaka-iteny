@@ -17,17 +17,36 @@ signal register_pressed(email:String,password:String)
 	#pass
 func attempt_register() -> void:
 	if email_input.text.is_empty():
-		rich_text_label.text = "Email cannot be empty"
+		show_message("邮箱不能为空",2)
 		return
 	elif password_input.text.is_empty() or password_input_re.text.is_empty():
-		rich_text_label.text = "Password cannot be empty"
+		show_message("密码不能为空",2)
+		return
+	elif password_input.text.length() < 7:
+		show_message("密码长度至少8位", 2)
 		return
 	elif password_input.text.similarity(password_input_re.text) != 1:
-		rich_text_label.text = "Passwords do not match"
+		show_message("两次密码输入不一致",2)
 		return
-	register_pressed.emit(email_input.text,password_input.text)
+	if ValidData.is_valid_email(email_input.text) == false:
+		show_message("Email格式错误！",2)
+		return
+	register_pressed.emit(email_input.text,password_input.text,Callable(self,"show_message"))
 	#emit_signal("register_pressed", email_input.text, password_input.text, remember_email.pressed)
-
+func show_message(text: String, statusType: int):
+	# 清空内容
+	rich_text_label.clear()
+	var style = StyleBoxFlat.new()
+	#如果类型为1为成功，2为失败
+	if statusType == 1:
+		style.bg_color = "#51a351"  # RGB 值 (深蓝色)
+		style.set_corner_radius_all(5) 
+		rich_text_label.append_text("[img=20x20]res://assets/icons/success.svg[/img] "+text)
+	elif statusType == 2:
+		style.bg_color = "#bd362f"  # RGB 值 (深蓝色)
+		style.set_corner_radius_all(5) 
+		rich_text_label.append_text("[img=20x20]res://assets/icons/fail.svg[/img] "+text)
+	rich_text_label.add_theme_stylebox_override("normal", style)
 func _on_register_button_pressed() -> void:
 	attempt_register()
 	print("我要正式注册了")

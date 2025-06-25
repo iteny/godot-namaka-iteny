@@ -54,34 +54,28 @@ func _on_change_scene():
 func _on_loginform_to_registerform():
 	var new_node = preload("res://src/ui/RegisterForm.tscn").instantiate()
 	var target_node = get_node("/root/Main/CanvasLayer/LoginForm")	
-	new_node.register_pressed.connect(_on_laoluan)
+	new_node.register_pressed.connect(Callable(self, "_on_register").bind())
 	replace_child_node(target_node, new_node)
-func _on_laoluan(email:String,password:String):
+func _on_register(email:String,password:String,cb: Callable):
 	print("账号密码分别是:"+email+password)
 	var new_node = preload("res://src/ui/LoginForm.tscn").instantiate()
 	var target_node = get_node("/root/Main/CanvasLayer/RegisterForm")	
 	new_node.goto_register.connect(_on_loginform_to_registerform)
-	replace_child_node(target_node, new_node)
 	 # 使用正确的认证方法进行注册
 	var result = await client.authenticate_email_async(email, password, null, true)
-	
 	if result.is_exception():
 		var error = result.get_exception()
-		#$result_label.text = "注册失败: %s" % error.message
+		cb.call("注册失败: %s" % error.message,2)
+		#register_node.show_message("注册失败: %s" % error.message,2)
+		#register_node.rich_text_label.text = "注册失败: %s" % error.message
 	else:
 		session = result
-		#$result_label.text = "注册成功！ID: %s" % session.user_id
+		#register_node.show_message("注册成功！ID: %s" % session.user_id,1)
+		#register_node.rich_text_label.text = "注册成功！ID: %s" % session.user_id
+		cb.call("注册成功！ID: %s" % session.user_id,1)
+		#replace_child_node(target_node, new_node)
 	print("老卵")	
-# 使用新认证系统的注册函数
-#func _register_with_email(email: String, password: String):
-	## 创建认证对象
-	#var auth = NakamaAuth.new()
-	#auth.email = email
-	#auth.password = password
-	#auth.create = true  # 设置为 true 表示注册新用户
-	#
-	## 使用 authenticate_async 方法
-	#return await client.authenticate_async(auth)	
+
 func change_scene_with_fade(path:String)->void:
 	#layer=10	
 	print("111")
@@ -143,3 +137,9 @@ func replace_child_node(target_node: Node, new_node: Node):
 	parent.move_child(new_node, index)
 	# 移除旧节点
 	target_node.queue_free()
+# 查找直接子节点
+func find_child_by_name(parent: Node, name: String) -> Node:
+	for child in parent.get_children():
+		if child.name == name:
+			return child
+	return null
