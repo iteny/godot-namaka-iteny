@@ -39,7 +39,7 @@ region_rect = Rect2(-9.68018, 5.07712, 1937.14, 1078.02)
 axis_stretch_horizontal = 2
 axis_stretch_vertical = 2
 
-[node name="BoxContainer2" type="BoxContainer" parent="menu"]
+[node name="BoxEmail" type="BoxContainer" parent="menu"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -53,18 +53,17 @@ offset_bottom = -60.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="menu/BoxContainer2"]
+[node name="EmailLabel" type="Label" parent="menu/BoxEmail"]
 custom_minimum_size = Vector2(100, 32)
 layout_mode = 2
-text = "Email"
+text = "邮箱"
 vertical_alignment = 1
 
-[node name="LineEdit" type="LineEdit" parent="menu/BoxContainer2"]
+[node name="EmailInput" type="LineEdit" parent="menu/BoxEmail"]
 custom_minimum_size = Vector2(200, 32)
 layout_mode = 2
-text = "123123123"
 
-[node name="BoxContainer3" type="BoxContainer" parent="menu"]
+[node name="BoxPassword" type="BoxContainer" parent="menu"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -78,58 +77,59 @@ offset_bottom = -17.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="menu/BoxContainer3"]
+[node name="PasswordLabel" type="Label" parent="menu/BoxPassword"]
 custom_minimum_size = Vector2(100, 32)
 layout_mode = 2
-text = "Password"
+text = "密码"
 vertical_alignment = 1
 
-[node name="LineEdit" type="LineEdit" parent="menu/BoxContainer3"]
+[node name="PasswordInput" type="LineEdit" parent="menu/BoxPassword"]
 custom_minimum_size = Vector2(200, 32)
 layout_mode = 2
-text = "123123123"
 
-[node name="BoxContainer" type="BoxContainer" parent="menu"]
+[node name="BoxCheck" type="BoxContainer" parent="menu"]
 layout_mode = 0
 offset_left = 180.5
 offset_top = 124.5
 offset_right = 291.5
 offset_bottom = 156.5
 
-[node name="CheckBox" type="CheckBox" parent="menu/BoxContainer"]
+[node name="CheckBox" type="CheckBox" parent="menu/BoxCheck"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="menu/BoxContainer"]
+[node name="Label" type="Label" parent="menu/BoxCheck"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 text = "remember"
 vertical_alignment = 1
 
-[node name="BoxContainer4" type="BoxContainer" parent="menu"]
+[node name="BoxButton" type="BoxContainer" parent="menu"]
 layout_mode = 0
 offset_left = 79.5
 offset_top = 165.5
 offset_right = 403.5
 offset_bottom = 197.5
 
-[node name="LoginButton" type="Button" parent="menu/BoxContainer4"]
+[node name="LoginButton" type="Button" parent="menu/BoxButton"]
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 text = "登录"
 
-[node name="RegisterButton" type="Button" parent="menu/BoxContainer4"]
+[node name="RegisterButton" type="Button" parent="menu/BoxButton"]
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 text = "注册"
 
-[node name="LineEdit" type="LineEdit" parent="menu"]
+[node name="StatusLabel" type="RichTextLabel" parent="menu"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 0
-offset_left = 84.5
-offset_top = 247.5
-offset_right = 406.5
-offset_bottom = 278.5
-text = "1231231231231232131"
-alignment = 1
+offset_left = 85.0
+offset_top = 221.0
+offset_right = 405.0
+offset_bottom = 261.0
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[connection signal="pressed" from="menu/BoxContainer4/RegisterButton" to="." method="_on_register_button_pressed"]
+[connection signal="pressed" from="menu/BoxButton/LoginButton" to="." method="_on_login_button_pressed"]
+[connection signal="pressed" from="menu/BoxButton/RegisterButton" to="." method="_on_register_button_pressed"]

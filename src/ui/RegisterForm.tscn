@@ -128,7 +128,7 @@ custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 text = "取消"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="menu"]
+[node name="StatusLabel" type="RichTextLabel" parent="menu"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 0
 offset_left = 90.0
