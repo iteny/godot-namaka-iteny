@@ -20,7 +20,15 @@ func _ready():
 	#var avatar_url = account.user.avatar_url
 	#var user_id = account.user.id	
 	#print("天天开心"+username+avatar_url+user_id)
-	ServerConnection.get_account()
+	#ServerConnection.get_account()
+	var username:=ServerConnection.session.username
+	print(username+"呸呸呸")
+	#ServerConnection.update_account_info()
+	#ServerConnection.get_metadata()
+	#ServerConnection.create_group()
+	ServerConnection.add_room()
+	await get_tree().create_timer(3.0).timeout 
+	ServerConnection.send_room_message("你好吗，小图在吗")
 	pass
 func _process(delta: float) -> void:
 	pass

@@ -6,6 +6,7 @@ const SERVER_SCHEME = "http"
 var _client : NakamaClient
 var _socket: NakamaSocket 
 var session: NakamaSession
+var world_channel_id: String
 func _ready() -> void:
 	_client = Nakama.create_client(SERVER_KEY, SERVER_ADDRESS, SERVER_PORT, SERVER_SCHEME)
 	pass
@@ -42,6 +43,90 @@ func get_account():
 	var avatar_url = account.user.avatar_url
 	var user_id = account.user.id	
 	print("天天开心"+username+avatar_url+user_id)
+#更新账户信息
+func  update_account_info():
+	var new_username = "NotTheImp0ster"
+	var new_display_name = "Innocent Dave"
+	var new_avatar_url = "https://example.com/imposter.png"
+	var new_lang_tag = "en"
+	var new_location = "Edinburgh"
+	var new_timezone = "CST"
+
+	# 直接等待异步函数完成
+	await _client.update_account_async(
+		session,
+		new_username,
+		new_display_name,
+		new_avatar_url,
+		new_lang_tag,
+		new_location,
+		new_timezone
+	)
+#获取其他玩家的公开信息
+func get_other_player():
+	var ids = ["userid1", "userid2"]
+	var users: NakamaAPI.ApiUsers = await _client.get_users_async(session, ids)
+	pass	
+#读取元数据
+func get_metadata():
+	var title: String
+	var hat: String
+	var skin: String
+	# Get the updated account object
+	var account_result = await _client.get_account_async(session)
+	if account_result.is_exception():
+		push_error("Failed to get account: " + str(account_result.get_exception()))
+		return
+	var account: NakamaAPI.ApiAccount = account_result
+	# Parse the account user metadata
+	var json = JSON.new()
+	var parse_error = json.parse(account.user.metadata)
+	if parse_error != OK:
+		push_error("JSON parse error: " + json.get_error_message())
+		return
+	var metadata = json.get_data()
+	print("Title: %s" % metadata.get("title", ""))
+	print("Hat: %s" % metadata.get("hat", ""))
+	print("Skin: %s" % metadata.get("skin", ""))
+	pass
+#创建群组
+func create_group():
+	var name = "world_channel"
+	var description = "A group for people who love playing the imposter."
+	var open = true # public group
+	var max_size = 10000
+	var group : NakamaAPI.ApiGroup =await _client.create_group_async(session, name, description, open, max_size)
+#加入聊天室
+func add_room():
+	var roomname = "world_chat"
+	var persistence = false
+	var hidden = false
+	var type = NakamaSocket.ChannelType.Room
+	var channel : NakamaRTAPI.Channel =await _socket.join_chat_async(roomname, type, persistence, hidden)
+	if channel.is_exception():
+		var error = channel.get_exception().message
+		print("加入聊天室失败: " + error)
+		return
+	print("Connected to dynamic room channel: '%s'" % [channel])
+	world_channel_id = channel.id
+#发送消息
+func send_room_message(mess:String):
+	var channel_id = world_channel_id
+	print("我的房间号："+channel_id)
+	var message_content = { "message": mess }
+
+	var message_ack : NakamaRTAPI.ChannelMessageAck = await _socket.write_chat_message_async(channel_id, message_content)
+	if message_ack.is_exception():
+		var error = message_ack.get_exception().message
+		print("发送信息:"+error)
+		return
+	#var emote_content = {
+		#"emote": "point",
+		#"emoteTarget": "<red_player_user_id>",
+		#}
+#
+	#var emote_ack : NakamaRTAPI.ChannelMessageAck = await _socket.write_chat_message_async(channel_id, emote_content)
+	pass
 # 将邮件保存到配置文件中res://config.ini
 func save_email(email: String) -> void:
 	EmailConfigWorker.save_email(email)
