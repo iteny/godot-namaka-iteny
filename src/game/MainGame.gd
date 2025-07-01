@@ -26,9 +26,9 @@ func _ready():
 	#ServerConnection.update_account_info()
 	#ServerConnection.get_metadata()
 	#ServerConnection.create_group()
-	ServerConnection.add_room()
-	await get_tree().create_timer(3.0).timeout 
-	ServerConnection.send_room_message("你好吗，小图在吗")
+	#ServerConnection.add_room()
+	#await get_tree().create_timer(3.0).timeout 
+	#ServerConnection.send_room_message("你好吗，小图在吗")
 	pass
 func _process(delta: float) -> void:
 	pass

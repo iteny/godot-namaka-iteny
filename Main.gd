@@ -4,7 +4,7 @@ class_name ssj
 @onready var scene_container = $CanvasLayer/LoginForm  # 子场景容器节点
 #@onready var login_form: LoginForm = $CanvasLayer/LoginForm
 var current_scene: Node = null  # 当前显示的子场景
-var ui:UICanvas
+#var ui:UICanvas
 # Nakama 客户端配置
 # 导入 Nakama
 #const Nakama = preload("res://addons/com.heroiclabs.nakama/Nakama.gd")

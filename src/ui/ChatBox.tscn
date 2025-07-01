@@ -1,0 +1,48 @@
+[gd_scene load_steps=3 format=3 uid="uid://jl3d7qugm1xq"]
+
+[ext_resource type="Theme" uid="uid://cpfuam6p81m52" path="res://assets/theme/login_form/login_form_theme.tres" id="1_27cco"]
+[ext_resource type="Script" uid="uid://ci6xwsccjgayj" path="res://src/ui/ChatBox.gd" id="2_ogwus"]
+
+[node name="ChatBox" type="Control"]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = -413.0
+offset_right = 815.0
+offset_bottom = -13.0
+grow_vertical = 0
+theme = ExtResource("1_27cco")
+script = ExtResource("2_ogwus")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_right = 768.0
+offset_bottom = 272.0
+
+[node name="ChatLog" type="RichTextLabel" parent="ScrollContainer"]
+custom_minimum_size = Vector2(768, 272)
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=#ff9b00]Player1[/color]: This is [b]some[/b] placeholder text
+[color=#1e95e4]Player2[/color]: With another player"
+scroll_following = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 301.0
+offset_right = 645.0
+offset_bottom = 381.0
+
+[node name="LineEdit" type="LineEdit" parent="HBoxContainer"]
+custom_minimum_size = Vector2(632, 80)
+layout_mode = 2
+
+[node name="SendButton" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(120, 80)
+layout_mode = 2
+text = "发送"
+
+[connection signal="pressed" from="HBoxContainer/SendButton" to="." method="_on_send_button_pressed"]

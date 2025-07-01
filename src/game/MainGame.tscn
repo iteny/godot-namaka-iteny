@@ -1,13 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://dhxelvjp32srk"]
+[gd_scene load_steps=3 format=3 uid="uid://dhxelvjp32srk"]
 
 [ext_resource type="Script" uid="uid://dw5mwj6u1qepj" path="res://src/game/MainGame.gd" id="1_qr8kc"]
+[ext_resource type="PackedScene" uid="uid://jl3d7qugm1xq" path="res://src/ui/ChatBox.tscn" id="2_lkcwn"]
 
 [node name="MainGame" type="Node2D"]
 script = ExtResource("1_qr8kc")
 
 [node name="Button" type="Button" parent="."]
-offset_left = 328.0
-offset_top = 176.0
-offset_right = 736.0
-offset_bottom = 400.0
+offset_left = 736.0
+offset_top = 16.0
+offset_right = 1144.0
+offset_bottom = 240.0
 text = "gbfgbfgbfg"
+
+[node name="ChatBox" parent="." instance=ExtResource("2_lkcwn")]
+offset_left = 0.0
+offset_top = 232.0
+offset_right = 800.0
+offset_bottom = 632.0

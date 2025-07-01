@@ -1,14 +1,15 @@
 extends Node
+signal chat_message_received_signal(username,text)
 const SERVER_KEY = "defaultkey"  # 默认服务器密钥
 const SERVER_ADDRESS = "127.0.0.1" # 服务器地址
 const SERVER_PORT = 7350 # 默认端口
 const SERVER_SCHEME = "http"
-var _client : NakamaClient
+var _client := Nakama.create_client(SERVER_KEY, SERVER_ADDRESS, SERVER_PORT, SERVER_SCHEME)
 var _socket: NakamaSocket 
 var session: NakamaSession
 var world_channel_id: String
 func _ready() -> void:
-	_client = Nakama.create_client(SERVER_KEY, SERVER_ADDRESS, SERVER_PORT, SERVER_SCHEME)
+	#_client = Nakama.create_client(SERVER_KEY, SERVER_ADDRESS, SERVER_PORT, SERVER_SCHEME)
 	pass
 	
 	
@@ -25,6 +26,7 @@ func login_async(email:String,password:String)->NakamaSession:
 		print("登录陈工")
 		#connect_to_socket()
 	return result
+ # 连接实时Socket
 func connect_to_socket():
 	_socket = Nakama.create_socket_from(_client)
 	var result = await _socket.connect_async(session)
@@ -32,6 +34,21 @@ func connect_to_socket():
 		print("Socket连接失败: ", result.get_exception().message)
 	else:
 		print("Socket连接成功!")
+	# 设置消息接收监听
+	_socket.received_channel_message.connect(_on_received_message)
+	# 加入世界聊天室
+	join_world_chat_room()
+func _on_received_message(message: NakamaAPI.ApiChannelMessage):
+	# 解析消息内容
+	var content = JSON.parse_string(message.content)
+	var _sender = message.sender_id
+	var username = message.username
+	
+	# 显示在UI中
+	var formatted_msg = "[%s]: %s" % [username, content]
+	#chat_log.append_text(formatted_msg + "\n")
+	chat_message_received_signal.emit(username,content.message)
+	print("收到消息: ", formatted_msg)
 #获取账号信息
 func get_account():
 	var account = await _client.get_account_async(session)
@@ -69,9 +86,9 @@ func get_other_player():
 	pass	
 #读取元数据
 func get_metadata():
-	var title: String
-	var hat: String
-	var skin: String
+	var _title: String
+	var _hat: String
+	var _skin: String
 	# Get the updated account object
 	var account_result = await _client.get_account_async(session)
 	if account_result.is_exception():
@@ -91,14 +108,14 @@ func get_metadata():
 	pass
 #创建群组
 func create_group():
-	var name = "world_channel"
+	var group_name = "world_channel"
 	var description = "A group for people who love playing the imposter."
 	var open = true # public group
 	var max_size = 10000
-	var group : NakamaAPI.ApiGroup =await _client.create_group_async(session, name, description, open, max_size)
+	var _group : NakamaAPI.ApiGroup =await _client.create_group_async(session, group_name, description, open, max_size)
 #加入聊天室
-func add_room():
-	var roomname = "world_chat"
+func join_world_chat_room():
+	var roomname = "world "
 	var persistence = false
 	var hidden = false
 	var type = NakamaSocket.ChannelType.Room
@@ -112,7 +129,10 @@ func add_room():
 #发送消息
 func send_room_message(mess:String):
 	var channel_id = world_channel_id
-	print("我的房间号："+channel_id)
+	#print("我的房间号："+channel_id)
+	if channel_id == "":
+		printerr("无法向聊天发送文本消息：缺少channel_id")
+		return 
 	var message_content = { "message": mess }
 
 	var message_ack : NakamaRTAPI.ChannelMessageAck = await _socket.write_chat_message_async(channel_id, message_content)
